@@ -1,0 +1,12 @@
+schema
+    @sdl(
+        files: [
+            "helius/balances.graphql"
+            "helius/domains.graphql"
+            "helius/account.graphql"
+            "helius/address-nfts.graphql"
+            "helius/nft-events.graphql"
+        ]
+    ) {
+    query: Query
+}

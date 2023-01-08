@@ -1,0 +1,26 @@
+type Asset {
+    name: String
+    tokenAddress: String!
+    collectionName: String
+    collectionAddress: String
+    imageURL: String
+    traits: [Trait]
+}
+
+type Trait {
+    trait_type: String
+    value: String
+}
+
+type NftsResponse {
+    numberOfPages: Int!
+    nfts: [Asset]
+}
+
+type Query {
+    addressNfts(address: String!, pageNumber: Int = 0): NftsResponse
+        @rest(
+            endpoint: "https://api.helius.xyz/v0/addresses/$address/nfts?api-key=$api_key&page-number=$pageNumber"
+            configuration: "helius_config"
+        )
+}

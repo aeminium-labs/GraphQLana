@@ -1,0 +1,19 @@
+type Balance {
+    mint: String
+    tokenAccount: String
+    amount: Float
+    decimals: Float
+}
+
+type BalancesResponse {
+    tokens: [Balance]
+    nativeBalance: Float
+}
+
+type Query {
+    balances(address: String!): BalancesResponse
+        @rest(
+            endpoint: "https://api.helius.xyz/v0/addresses/$address/balances?api-key=$api_key"
+            configuration: "helius_config"
+        )
+}

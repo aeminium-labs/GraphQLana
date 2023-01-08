@@ -1,0 +1,31 @@
+type Account {
+    address: String
+    balances: BalancesResponse
+        @materializer(
+            query: "balances"
+            arguments: [{ name: "address", field: "address" }]
+        )
+    domains: DomainsResponse
+        @materializer(
+            query: "domains"
+            arguments: [{ name: "address", field: "address" }]
+        )
+    nfts: NftsResponse
+        @materializer(
+            query: "addressNfts"
+            arguments: [{ name: "address", field: "address" }]
+        )
+}
+
+type Query {
+    account(address: String!): Account
+        @rest(
+            endpoint: "stepzen:empty"
+            ecmascript: """
+            function transformREST(s) {
+                const out = { address: get("address") }
+                return JSON.stringify(out);
+            }
+            """
+        )
+}

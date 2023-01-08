@@ -1,0 +1,12 @@
+type DomainsResponse {
+    names: [String]
+}
+
+type Query {
+    domains(address: String!): DomainsResponse
+        @rest(
+            endpoint: "https://api.helius.xyz/v0/addresses/$address/names?api-key=$api_key"
+            configuration: "helius_config"
+            setters: [{ field: "names", path: "domainNames" }]
+        )
+}
