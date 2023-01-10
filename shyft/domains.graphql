@@ -1,0 +1,19 @@
+type Query {
+    shyftDomains(address: String!): DomainsResponse
+        @rest(
+            endpoint: "https://api.shyft.to/sol/v1/wallet/get_domains?network=mainnet-beta&wallet=$address"
+            configuration: "shyft_config"
+            headers: [{ name: "X-Api-Key", value: "$api_key" }]
+            ecmascript: """
+            function transformREST(s) {
+                let original = JSON.parse(s);
+
+                const out = {
+                    names: original.result.map(domain => domain.name)
+                }
+
+                return JSON.stringify(out);
+            }
+            """
+        )
+}

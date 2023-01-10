@@ -6,6 +6,7 @@ schema
             "helius/account.graphql"
             "helius/address-nfts.graphql"
             "helius/nft-events.graphql"
+            "shyft/domains.graphql"
         ]
     ) {
     query: Query

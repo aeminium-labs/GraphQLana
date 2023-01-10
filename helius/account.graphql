@@ -7,7 +7,7 @@ type Account {
         )
     domains: DomainsResponse
         @materializer(
-            query: "domains"
+            query: "shyftDomains"
             arguments: [{ name: "address", field: "address" }]
         )
     nfts: NftsResponse

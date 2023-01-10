@@ -3,3 +3,7 @@ configurationset:
           name: helius_config
           api_key: STEPZEN_HELIUS_API_KEY
           stepzen.queryextensionguard: true
+    - configuration:
+          name: shyft_config
+          api_key: STEPZEN_SHYFT_API_KEY
+          stepzen.queryextensionguard: true
