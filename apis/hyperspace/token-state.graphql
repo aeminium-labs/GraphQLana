@@ -1,0 +1,34 @@
+type TokenMarketStateResponse {
+    moonrankRarity: Int
+    howrareRarity: Int
+}
+
+type Query {
+    tokenMarketState(address: String!): TokenMarketStateResponse
+        @rest(
+            method: POST
+            endpoint: "https://beta.api.solanalysis.com/rest/get-token-state"
+            headers: [{ name: "authorization", value: "$api_key;" }]
+            contenttype: "application/json"
+            postbody: """
+            {
+              "condition": {
+                "token_addresses": [
+                  "{{ .Get "address" }}"
+                ]
+              }
+            }
+            """
+            configuration: "hyperspace_config"
+            setters: [
+                {
+                    field: "moonrankRarity"
+                    path: "market_place_states[0].moonrank"
+                }
+                {
+                    field: "howrareRarity"
+                    path: "market_place_states[0].howrare_rank"
+                }
+            ]
+        )
+}

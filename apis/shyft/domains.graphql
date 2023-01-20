@@ -1,5 +1,5 @@
 type Query {
-    shyftDomains(address: String!): DomainsResponse
+    shyftDomains(address: String!): Domains
         @rest(
             endpoint: "https://api.shyft.to/sol/v1/wallet/get_domains?network=mainnet-beta&wallet=$address"
             configuration: "shyft_config"

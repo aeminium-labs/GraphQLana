@@ -1,9 +1,9 @@
-type DomainsResponse {
+type Domains {
     names: [String]
 }
 
 type Query {
-    domains(address: String!): DomainsResponse
+    domains(address: String!): Domains
         @rest(
             endpoint: "https://api.helius.xyz/v0/addresses/$address/names?api-key=$api_key"
             configuration: "helius_config"

@@ -1,0 +1,29 @@
+type Listing {
+    transactionSignature: String
+    marketplace: Marketplaces
+    amount: Float
+    seller: String
+}
+
+type NftFingerprint {
+    mint: String
+    name: String
+    burned: Boolean
+    firstVerifiedCreator: String
+    verifiedCollectionAddress: String
+    activeListings: [Listing]
+}
+
+type Query {
+    nftFingerprint(tokenAddress: String!): NftFingerprint
+        @rest(
+            endpoint: "https://api.helius.xyz/v1/nfts?api-key=$api_key"
+            configuration: "helius_config"
+            contenttype: "application/json"
+            postbody: """
+            {
+                "mints": ["{{ .Get "tokenAddress" }}"]
+            }
+            """
+        )
+}

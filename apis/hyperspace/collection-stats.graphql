@@ -1,0 +1,112 @@
+type CollectionStats {
+    marketCap: Float
+    floorPrice: Float
+    floorPriceUSD: Float
+        @materializer(
+            query: "solToUsd { price }"
+            arguments: [{ name: "price", field: "floorPrice" }]
+        )
+    averagePrice: Float
+    supply: Int
+    volume1day: Float
+    volume7day: Float
+    holders: Int
+    twitterFollowers: Int
+    discordMembers: Int
+}
+
+type Query {
+    collectionStatsByName(name: String!): CollectionStats
+        @rest(
+            method: POST
+            endpoint: "https://beta.api.solanalysis.com/rest/get-project-stat-by-name"
+            headers: [{ name: "authorization", value: "$api_key;" }]
+            contenttype: "application/json"
+            postbody: """
+            {
+              "condition": {
+                "display_name": "{{ .Get "name" }}"
+              }
+            }
+            """
+            configuration: "hyperspace_config"
+            setters: [
+                { field: "marketCap", path: "project_stats[0].market_cap" }
+                { field: "floorPrice", path: "project_stats[0].floor_price" }
+                {
+                    field: "averagePrice"
+                    path: "project_stats[0].average_price"
+                }
+                { field: "supply", path: "project_stats[0].supply" }
+                { field: "volume1day", path: "project_stats[0].volume_1day" }
+                { field: "volume7day", path: "project_stats[0].volume_7day" }
+                {
+                    field: "holders"
+                    path: "project_stats[0].num_of_token_holders"
+                }
+                {
+                    field: "twitterFollowers"
+                    path: "project_stats[0].twitter_followers"
+                }
+                {
+                    field: "discordMembers"
+                    path: "project_stats[0].discord_members"
+                }
+            ]
+        )
+
+    collectionStatsByCreator(creatorAddress: String!): CollectionStats
+        @rest(
+            method: POST
+            endpoint: "https://beta.api.solanalysis.com/rest/get-project-stats"
+            headers: [{ name: "authorization", value: "$api_key;" }]
+            contenttype: "application/json"
+            postbody: """
+            {
+              "conditions": {
+                "project_ids": ["{{ .Get "creatorAddress" }}"]
+              }
+            }
+            """
+            configuration: "hyperspace_config"
+            setters: [
+                { field: "marketCap", path: "project_stats[0].market_cap" }
+                { field: "floorPrice", path: "project_stats[0].floor_price" }
+                {
+                    field: "averagePrice"
+                    path: "project_stats[0].average_price"
+                }
+                { field: "supply", path: "project_stats[0].supply" }
+                { field: "volume1day", path: "project_stats[0].volume_1day" }
+                { field: "volume7day", path: "project_stats[0].volume_7day" }
+                {
+                    field: "holders"
+                    path: "project_stats[0].num_of_token_holders"
+                }
+                {
+                    field: "twitterFollowers"
+                    path: "project_stats[0].twitter_followers"
+                }
+                {
+                    field: "discordMembers"
+                    path: "project_stats[0].discord_members"
+                }
+            ]
+        )
+
+    collectionStatsByToken(tokenAddress: String!): CollectionStats
+        @sequence(
+            steps: [
+                { query: "nftFingerprint" }
+                {
+                    query: "collectionStatsByCreator"
+                    arguments: [
+                        {
+                            name: "creatorAddress"
+                            field: "firstVerifiedCreator"
+                        }
+                    ]
+                }
+            ]
+        )
+}

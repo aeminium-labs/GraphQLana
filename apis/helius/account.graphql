@@ -1,18 +1,18 @@
 type Account {
     address: String
-    balances: BalancesResponse
+    balances: Balances
         @materializer(
             query: "balances"
             arguments: [{ name: "address", field: "address" }]
         )
-    domains: DomainsResponse
+    domains: Domains
         @materializer(
             query: "shyftDomains"
             arguments: [{ name: "address", field: "address" }]
         )
-    nfts: NftsResponse
+    nfts: AccountNftsConnection
         @materializer(
-            query: "addressNfts"
+            query: "accountNfts"
             arguments: [{ name: "address", field: "address" }]
         )
 }

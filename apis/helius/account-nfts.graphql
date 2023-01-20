@@ -1,0 +1,55 @@
+type Asset {
+    name: String
+    tokenAddress: String!
+    collectionName: String
+    collectionAddress: String
+    imageURL: String
+    traits: [Trait]
+    collectionStats: CollectionStats
+        @materializer(
+            query: "collectionStatsByToken"
+            arguments: [{ name: "tokenAddress", field: "tokenAddress" }]
+        )
+    moonrankRarity: Int
+        @materializer(
+            query: "tokenMarketState { moonrankRarity }"
+            arguments: [{ name: "address", field: "tokenAddress" }]
+        )
+    howrareRarity: Int
+        @materializer(
+            query: "tokenMarketState { howrareRarity }"
+            arguments: [{ name: "address", field: "tokenAddress" }]
+        )
+}
+
+type Trait {
+    trait_type: String
+    value: String
+}
+
+type AccountNftsEdge {
+    node: Asset
+    cursor: String
+}
+
+type AccountNftsConnection {
+    pageInfo: PageInfo!
+    edges: [AccountNftsEdge]
+}
+
+type Query {
+    accountNfts(
+        address: String!
+        first: Int! = 50
+        after: String! = ""
+    ): AccountNftsConnection
+        @rest(
+            endpoint: "https://api.helius.xyz/v0/addresses/$address/nfts?api-key=$api_key&page-number=$after"
+            configuration: "helius_config"
+            resultroot: "nfts[]"
+            pagination: {
+                type: PAGE_NUMBER
+                setters: [{ field: "total", path: "numberOfPages" }]
+            }
+        )
+}

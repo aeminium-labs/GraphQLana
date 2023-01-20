@@ -1,0 +1,21 @@
+type solToUsd {
+    price: Float
+}
+
+type Query {
+    solToUsd(price: Float!): solToUsd
+        @rest(
+            endpoint: "https://price.jup.ag/v1/price?id=So11111111111111111111111111111111111111112"
+            ecmascript: """
+            function transformREST(s) {
+                let out = JSON.parse(s).data;
+
+                if (out.price) {
+                    out = { price: out.price * get("price") };
+                }
+
+                return JSON.stringify(out);
+            }
+            """
+        )
+}

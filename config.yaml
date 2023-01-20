@@ -7,3 +7,7 @@ configurationset:
           name: shyft_config
           api_key: STEPZEN_SHYFT_API_KEY
           stepzen.queryextensionguard: true
+    - configuration:
+          name: hyperspace_config
+          api_key: STEPZEN_HYPERSPACE_API_KEY
+          stepzen.queryextensionguard: true

@@ -5,13 +5,13 @@ type Balance {
     decimals: Float
 }
 
-type BalancesResponse {
+type Balances {
     tokens: [Balance]
     nativeBalance: Float
 }
 
 type Query {
-    balances(address: String!): BalancesResponse
+    balances(address: String!): Balances
         @rest(
             endpoint: "https://api.helius.xyz/v0/addresses/$address/balances?api-key=$api_key"
             configuration: "helius_config"

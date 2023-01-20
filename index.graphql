@@ -1,12 +1,17 @@
 schema
     @sdl(
         files: [
-            "helius/balances.graphql"
-            "helius/domains.graphql"
-            "helius/account.graphql"
-            "helius/address-nfts.graphql"
-            "helius/nft-events.graphql"
-            "shyft/domains.graphql"
+            "apis/helius/balances.graphql"
+            "apis/helius/domains.graphql"
+            "apis/helius/account.graphql"
+            "apis/helius/account-nfts.graphql"
+            "apis/helius/nft-events.graphql"
+            "apis/helius/nft-fingerprint.graphql"
+            "apis/shyft/domains.graphql"
+            "apis/hyperspace/token-state.graphql"
+            "apis/hyperspace/collection-stats.graphql"
+            "generic/globals.graphql"
+            "generic/utils.graphql"
         ]
     ) {
     query: Query
