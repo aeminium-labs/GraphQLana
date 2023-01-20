@@ -10,10 +10,13 @@ type Account {
             query: "shyftDomains"
             arguments: [{ name: "address", field: "address" }]
         )
-    nfts: AccountNftsConnection
+    nfts(after: String! = ""): AccountNftsConnection
         @materializer(
             query: "accountNfts"
-            arguments: [{ name: "address", field: "address" }]
+            arguments: [
+                { name: "address", field: "address" }
+                { name: "after", argument: "after" }
+            ]
         )
 }
 
