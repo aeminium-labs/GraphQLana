@@ -18,14 +18,5 @@ type Account {
 }
 
 type Query {
-    account(address: String!): Account
-        @rest(
-            endpoint: "stepzen:empty"
-            ecmascript: """
-            function transformREST(s) {
-                const out = { address: get("address") }
-                return JSON.stringify(out);
-            }
-            """
-        )
+    account(address: String!): Account @connector(type: "echo")
 }
