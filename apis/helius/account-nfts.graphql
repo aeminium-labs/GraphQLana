@@ -5,6 +5,11 @@ type Asset {
     collectionAddress: String
     imageURL: String
     traits: [Trait]
+    activeListings: [Listing]
+        @materializer(
+            query: "nftFingerprint { activeListings }"
+            arguments: [{ name: "tokenAddress", field: "tokenAddress" }]
+        )
     collectionStats: CollectionStats
         @materializer(
             query: "collectionStatsByToken"
