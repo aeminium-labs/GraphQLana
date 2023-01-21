@@ -10,7 +10,23 @@ type Account {
             query: "shyftDomains"
             arguments: [{ name: "address", field: "address" }]
         )
-    nfts(after: String! = ""): AccountNftsConnection
+    events(
+        types: [EventTypes]
+        first: Int
+        after: String
+        sortOrder: SortType
+    ): AccountEventsConnection
+        @materializer(
+            query: "accountEvents"
+            arguments: [
+                { name: "address", field: "address" }
+                { name: "types", argument: "types" }
+                { name: "after", argument: "after" }
+                { name: "first", argument: "first" }
+                { name: "sortOrder", argument: "sortOrder" }
+            ]
+        )
+    nfts(after: String): AccountNftsConnection
         @materializer(
             query: "accountNfts"
             arguments: [

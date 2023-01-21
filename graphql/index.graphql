@@ -5,7 +5,7 @@ schema
             "apis/helius/domains.graphql"
             "apis/helius/account.graphql"
             "apis/helius/account-nfts.graphql"
-            "apis/helius/nft-events.graphql"
+            "apis/helius/account-events.graphql"
             "apis/helius/nft-fingerprint.graphql"
             "apis/shyft/domains.graphql"
             "apis/hyperspace/token-state.graphql"

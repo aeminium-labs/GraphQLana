@@ -1,0 +1,68 @@
+type AccountEvents {
+    description: String
+    amount: Float
+    slot: Int
+    timestamp: Int
+    saleType: String
+    signature: String
+    buyer: String
+    seller: String
+    staker: String
+    nfts: [NftFingerprint]
+}
+
+type AccountEventsEdge {
+    node: AccountEvents
+    cursor: String
+}
+
+type AccountEventsConnection {
+    pageInfo: PageInfo!
+    edges: [AccountEventsEdge]
+}
+
+type Query {
+    accountEvents(
+        address: String!
+        types: [EventTypes] = []
+        first: Int! = 100
+        after: String! = ""
+        sortOrder: SortType = DESC
+    ): AccountEventsConnection
+        @rest(
+            method: POST
+            endpoint: "https://api.helius.xyz/v1/nft-events?api-key=$api_key"
+            contenttype: "application/json"
+            configuration: "helius_config"
+            cachepolicy: { strategy: ON }
+            postbody: """
+            {
+                "query": {
+                    "accounts": ["{{ .Get "address" }}"],
+                    "types": {{ .GetJSON "types" }}
+                },
+                "options": {
+                    "limit": {{ .Get "first" }},
+                    "sortOrder": "{{ .Get "sortOrder" }}",
+                    "paginationToken": "{{ .Get "after" }}"
+                }
+            }
+            """
+            ecmascript: """
+            function bodyPOST(s) {
+                let body = JSON.parse(s);
+
+                if (body.options.paginationToken.length === 0) {
+                    body.options.paginationToken = null;
+                }
+
+                return JSON.stringify(body);
+            }
+            """
+            resultroot: "result[]"
+            pagination: {
+                type: NEXT_CURSOR
+                setters: [{ field: "nextCursor", path: "paginationToken" }]
+            }
+        )
+}

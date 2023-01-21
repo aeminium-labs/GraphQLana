@@ -5,7 +5,7 @@ type solToUsd {
 type Query {
     solToUsd(price: Float!): solToUsd
         @rest(
-            endpoint: "https://price.jup.ag/v1/price?id=So11111111111111111111111111111111111111112"
+            endpoint: "https://price.jup.ag/v4/price?ids=SOL"
             ecmascript: """
             function transformREST(s) {
                 let out = JSON.parse(s).data;

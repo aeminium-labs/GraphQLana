@@ -1,0 +1,117 @@
+query getAccount($address: String!) {
+    account(address: $address) {
+        address
+        balances {
+            nativeBalance
+            tokens {
+                amount
+                decimals
+                mint
+                tokenAccount
+            }
+        }
+        domains {
+            names
+        }
+    }
+}
+
+query getAccountEvents(
+    $address: String!
+    $types: [EventTypes]
+    $first: Int
+    $after: String
+    $sortOrder: SortType
+) {
+    account(address: $address) {
+        address
+        events(
+            types: $types
+            first: $first
+            after: $after
+            sortOrder: $sortOrder
+        ) {
+            edges {
+                cursor
+                node {
+                    amount
+                    buyer
+                    description
+                    nfts {
+                        activeListings {
+                            amount
+                            marketplace
+                            seller
+                            transactionSignature
+                        }
+                        burned
+                        firstVerifiedCreator
+                        mint
+                        name
+                        verifiedCollectionAddress
+                    }
+                    saleType
+                    seller
+                    signature
+                    slot
+                    staker
+                    timestamp
+                }
+            }
+            pageInfo {
+                endCursor
+                hasNextPage
+                hasPreviousPage
+                startCursor
+            }
+        }
+    }
+}
+
+query getAccountNfts($address: String!, $after: String) {
+    account(address: $address) {
+        address
+        nfts(after: $after) {
+            edges {
+                cursor
+                node {
+                    activeListings {
+                        amount
+                        marketplace
+                        seller
+                        transactionSignature
+                    }
+                    collectionAddress
+                    collectionName
+                    collectionStats {
+                        averagePrice
+                        discordMembers
+                        floorPrice
+                        floorPriceUSD
+                        holders
+                        marketCap
+                        supply
+                        twitterFollowers
+                        volume1day
+                        volume7day
+                    }
+                    howrareRarity
+                    imageURL
+                    moonrankRarity
+                    name
+                    tokenAddress
+                    traits {
+                        trait_type
+                        value
+                    }
+                }
+            }
+            pageInfo {
+                endCursor
+                hasNextPage
+                hasPreviousPage
+                startCursor
+            }
+        }
+    }
+}
