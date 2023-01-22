@@ -1,3 +1,5 @@
+<br/>
+
 ![logo-graphqlana-narrow](https://user-images.githubusercontent.com/38172/213896525-2e0ebc4c-5e19-48a8-800d-03340eea8f34.png)
 
 ## Solana's blockchain data for humans
