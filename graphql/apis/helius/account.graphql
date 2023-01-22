@@ -1,15 +1,30 @@
 type Account {
+    """
+    The address of the wallet
+    """
     address: String
+
+    """
+    Balances of native and SPL tokens in the wallet
+    """
     balances: Balances
         @materializer(
             query: "balances"
             arguments: [{ name: "address", field: "address" }]
         )
+
+    """
+    Associated .sol domains
+    """
     domains: Domains
         @materializer(
             query: "shyftDomains"
             arguments: [{ name: "address", field: "address" }]
         )
+
+    """
+    Historical NFT events from wallet
+    """
     events(
         types: [EventTypes]
         first: Int
@@ -26,6 +41,10 @@ type Account {
                 { name: "sortOrder", argument: "sortOrder" }
             ]
         )
+
+    """
+    NFTs stored in the wallet
+    """
     nfts(after: String): AccountNftsConnection
         @materializer(
             query: "accountNfts"
@@ -37,5 +56,8 @@ type Account {
 }
 
 type Query {
+    """
+    Account information for a given wallet address
+    """
     account(address: String!): Account @connector(type: "echo")
 }
