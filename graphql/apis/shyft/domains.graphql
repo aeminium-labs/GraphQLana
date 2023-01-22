@@ -8,8 +8,12 @@ type Query {
             function transformREST(s) {
                 let original = JSON.parse(s);
 
-                const out = {
-                    names: original.result.map(domain => domain.name)
+                let out = original;
+
+                if (original.result) {
+                    out = {
+                        names: original.result.map(domain => domain.name)
+                    }
                 }
 
                 return JSON.stringify(out);
