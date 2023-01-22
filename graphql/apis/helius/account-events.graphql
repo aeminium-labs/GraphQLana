@@ -6,7 +6,17 @@ type AccountEvents {
     saleType: String
     signature: String
     buyer: String
+    buyerAccount: Account
+        @materializer(
+            query: "account"
+            arguments: [{ name: "address", field: "buyer" }]
+        )
     seller: String
+    sellerAccount: Account
+        @materializer(
+            query: "account"
+            arguments: [{ name: "address", field: "seller" }]
+        )
     staker: String
     nfts: [NftFingerprint]
 }
