@@ -55,7 +55,11 @@ We're constantly improving the access to on-chain data through our supported ser
 
 For that reason, the main query is the `account` query, although it also exposes a bunch of other queries to access a particular subset of the data.
 
-From the account query it's possible to find information about a token balances, associated .sol domains, transactions and existing NFTs. There are many layers of data to explore for each of these fields and we're regularly improving the existing queries so the best option is to use our online playground and see the data that we can fetch.
+![image](https://user-images.githubusercontent.com/38172/213898815-6ab35cf0-e65e-4733-a129-1cb5664f6d4f.png)
+
+From the account query it's possible to find information about a token balances, associated .sol domains, transactions and existing NFTs. 
+
+There are many layers of data to explore for each of these fields and we're regularly improving the existing queries so the best option is to use our online playground and see the data that we can fetch.
 
 ## Technologies
 
