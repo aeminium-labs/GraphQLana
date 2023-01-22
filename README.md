@@ -12,25 +12,31 @@ This has been the main drive behind the recent surge of services that are trying
 
 ## Features
 
-### Seamlessly combine multiple sources of data
+### 🪡 Seamlessly combine multiple sources of data
 
 Stop worrying about fetching data from multiple endpoints and stitching that all back together. With **GraphQLana** you get access to the top sources of data from Solana's blockchain without even knowing it.
 
 Focus on the data that you want, and let us do all the work behind the scenes.
 
-### Get exactly the data that you need and nothing else
+### ☑️ Get exactly the data that you need and nothing else
 
 Why have to parse all the data if you just need a small sample? And what about having to fetch that additional data that didn't come in the first request?
 
 With **GraphQLana** there's no extra data or missing fields, you get **exactly** what you want. We wish we could take the credits for that but it's just one of the benefits of using GraphQL.
 
-### Quickly iterate in the online explorer
+### 🔎 Augment the data with richer types
+
+Whenever it's relevant we extend the returned data with more complex types so we can provide better data than the originally returned by the source APIs.
+
+For example, whenever we get a wallet address for a given property we convert that to the `Account` type which enables a whole new set of data in a very natural way.
+
+### 🧪 Quickly iterate in the online explorer
 
 You don't need to setup a project or download an app to get started. Just hop into our online playground and start exploring the data!
 
 Start with a small query and build on top of that. When you're happy with the data, use that query in your application and create something amazing with it!
 
-### Discover the unknown with the integrated documentation
+### 🧭 Discover the unknown with the integrated documentation
 
 Looking for the documentation? Well with GraphQL everything is self-documented! We take advantage of GraphQL's declarative nature and
 
@@ -59,7 +65,7 @@ For that reason, the main query is the `account` query, although it also exposes
 
 ![image](https://user-images.githubusercontent.com/38172/213898815-6ab35cf0-e65e-4733-a129-1cb5664f6d4f.png)
 
-From the account query it's possible to find information about a token balances, associated .sol domains, transactions and existing NFTs. 
+From the account query it's possible to find information about a token balances, associated .sol domains, transactions and existing NFTs.
 
 There are many layers of data to explore for each of these fields and we're regularly improving the existing queries so the best option is to use our online playground and see the data that we can fetch.
 
