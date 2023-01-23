@@ -3,7 +3,7 @@ type solToUsd {
 }
 
 type Query {
-    solToUsd(price: Float!): solToUsd
+    solToUsd(amount: Float!): solToUsd
         @rest(
             endpoint: "https://price.jup.ag/v4/price?ids=SOL"
             ecmascript: """
@@ -11,7 +11,7 @@ type Query {
                 let out = JSON.parse(s).data;
 
                 if (out.price) {
-                    out = { price: out.price * get("price") };
+                    out = { price: out.price * get("amount") };
                 }
 
                 return JSON.stringify(out);

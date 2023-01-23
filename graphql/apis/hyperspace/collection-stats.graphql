@@ -4,7 +4,7 @@ type CollectionStats {
     floorPriceUSD: Float
         @materializer(
             query: "solToUsd { price }"
-            arguments: [{ name: "price", field: "floorPrice" }]
+            arguments: [{ name: "amount", field: "floorPrice" }]
         )
     averagePrice: Float
     supply: Int
