@@ -62,12 +62,12 @@ Why not starting with something simple like retrieving the SOL balance in your a
 
 ```gql
 query Account {
-  account(address: "<add your wallet address>") {
-    balances {
-      nativeBalance
-      nativeBalanceUSD
+    account(address: "<add your wallet address>") {
+        balances {
+            nativeBalance
+            nativeBalanceUSD
+        }
     }
-  }
 }
 ```
 
@@ -80,6 +80,7 @@ We're constantly improving the access to on-chain data through our supported ser
 -   [Helius](https://helius.xyz/)
 -   [Shyft](https://shyft.to/)
 -   [Hyperspace](https://hyperspace.xyz/)
+-   [Flipside](https://flipsidecrypto.xyz/)
 -   [Jupiter](https://jup.ag/)
 
 **GraphQLana** doesn't expose all of these API's endpoints in our schema, the intention isn't to create a simple 1-to-1 match with each API but to curate a more human-readable schema that makes it easier to navigate through the data.
