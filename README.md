@@ -42,7 +42,9 @@ Start with a small query and build on top of that. When you're happy with the da
 
 ### 🧭 Discover the unknown with the integrated documentation
 
-Looking for the documentation? Well with GraphQL everything is self-documented! We take advantage of GraphQL's declarative nature and
+Looking for the documentation? Well, with GraphQL everything is self-documented! We take advantage of GraphQL's declarative nature and provide auto-completion and schema validation out of the box.
+
+![image](https://user-images.githubusercontent.com/38172/214044417-d4fb7468-f6cf-4c00-b01e-8127fdc3ec2a.png)
 
 No more wasted time going through the docs to see how to use a given API, using **GraphQLana** will feel natural to you.
 
