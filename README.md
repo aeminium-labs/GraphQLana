@@ -50,9 +50,26 @@ No more wasted time going through the docs to see how to use a given API, using 
 
 Integrate our SDK in your application for an improved experience with fully typed responses in your favourite language!
 
+![Screenshot_20230123_115632](https://user-images.githubusercontent.com/38172/214035493-4aaef57f-713d-443c-9f96-a194b4d96ae7.png)
+
+This is currently under development and is one of the main areas of improvement in the next few months.
+
 ## Getting started
 
 Head to https://www.graphqlana.com and start exploring Solana's blockchain data with our online GraphQL explorer.
+
+Why not starting with something simple like retrieving the SOL balance in your account?
+
+```gql
+query Account {
+  account(address: "<add your wallet address>") {
+    balances {
+      nativeBalance
+      nativeBalanceUSD
+    }
+  }
+}
+```
 
 For now, using the GraphQL endpoint directly in your app isn't recommended as we're still developing the service and there could be breaking changes or issues with some of our data providers.
 
