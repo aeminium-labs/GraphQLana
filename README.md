@@ -30,6 +30,10 @@ Whenever it's relevant we extend the returned data with more complex types so we
 
 For example, whenever we get a wallet address for a given property we convert that to the `Account` type which enables a whole new set of data in a very natural way.
 
+![Screenshot_20230122_224314](https://user-images.githubusercontent.com/38172/213950243-715cb8a9-5ba0-4a8f-ba6e-caad8b487e12.png)
+
+In this query we're navigation the wallet's NFT sales data and retrieving the SOL balance for each one of the buyers. Simples!
+
 ### 🧪 Quickly iterate in the online explorer
 
 You don't need to setup a project or download an app to get started. Just hop into our online playground and start exploring the data!
@@ -44,11 +48,13 @@ No more wasted time going through the docs to see how to use a given API, using 
 
 ## Getting started
 
-TBA
+Head to https://www.graphqlana.com and start exploring Solana's blockchain data with our online GraphQL explorer.
+
+For now, using the GraphQL endpoint directly in your app isn't recommended as we're still developing the service and there could be breaking changes or issues with some of our data providers.
 
 ## Supported data sources
 
-We're constantly improving the access to on-chain data through our supported services and currently support these sources:
+We're constantly improving the access to on-chain data through our supported services and currently support these providers:
 
 -   [Helius](https://helius.xyz/)
 -   [Shyft](https://shyft.to/)
