@@ -10,6 +10,8 @@ schema
             "apis/shyft/domains.graphql"
             "apis/hyperspace/token-state.graphql"
             "apis/hyperspace/collection-stats.graphql"
+            "apis/flipside/utils.graphql"
+            "apis/flipside/token-price.graphql"
             "generic/globals.graphql"
             "generic/utils.graphql"
         ]

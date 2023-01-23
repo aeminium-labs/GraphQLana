@@ -1,0 +1,19 @@
+type CreateFlipsideQuery {
+    token: String!
+}
+
+type Query {
+    createFlipsideQuery(query: String!): CreateFlipsideQuery
+        @rest(
+            method: POST
+            endpoint: "https://node-api.flipsidecrypto.com/queries"
+            headers: [{ name: "x-api-key", value: "$api_key;" }]
+            contenttype: "application/json"
+            postbody: """
+            {
+              "sql": "{{ .Get "query" }}"
+            }
+            """
+            configuration: "flipside_config"
+        )
+}

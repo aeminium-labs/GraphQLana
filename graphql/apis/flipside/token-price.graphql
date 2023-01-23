@@ -1,0 +1,48 @@
+type TokenPriceQuery {
+    query: String!
+}
+
+type TokenPrice {
+    TOKEN_ADDRESS: String
+}
+
+type Query {
+    tokenPrice(address: String!): [TokenPrice]
+        @sequence(
+            steps: [
+                { query: "buildTokenPriceQuery" }
+                { query: "createFlipsideQuery" }
+                { query: "getFlipsideResults" }
+            ]
+        )
+
+    buildTokenPriceQuery(address: String!): TokenPriceQuery
+        @rest(
+            endpoint: "stepzen:empty"
+            ecmascript: """
+            function transformREST(s) {
+                const out = {
+                    query: `SELECT * FROM solana.core.ez_token_prices_hourly WHERE TOKEN_ADDRESS = '${ get("address") }' ORDER BY RECORDED_HOUR DESC LIMIT 1;`
+                }
+
+                return JSON.stringify(out);
+            }
+            """
+        )
+
+    getFlipsideResults(
+        token: String!
+        pageNumber: Int! = 1
+        pageSize: Int! = 50
+    ): [TokenPrice]
+        @rest(
+            endpoint: "https://node-api.flipsidecrypto.com/queries/$token?pageNumber=$pageNumber&pageSize=$pageSize"
+            headers: [
+                { name: "x-api-key", value: "$api_key;" }
+                { name: "Accept", value: "application/json" }
+            ]
+            contenttype: "application/json"
+            configuration: "flipside_config"
+            resultroot: "results[]"
+        )
+}

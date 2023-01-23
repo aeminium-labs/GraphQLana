@@ -11,3 +11,7 @@ configurationset:
           name: hyperspace_config
           api_key: STEPZEN_HYPERSPACE_API_KEY
           stepzen.queryextensionguard: true
+    - configuration:
+          name: flipside_config
+          api_key: STEPZEN_FLIPSIDE_API_KEY
+          stepzen.queryextensionguard: true
