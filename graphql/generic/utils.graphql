@@ -1,17 +1,25 @@
-type solToUsd {
+type convertToUsd {
     price: Float
 }
 
 type Query {
-    solToUsd(amount: Float!): solToUsd
+    convertToUsd(
+        amount: Float!
+        decimals: Float
+        token: String! = "So11111111111111111111111111111111111111112"
+    ): convertToUsd
         @rest(
-            endpoint: "https://price.jup.ag/v4/price?ids=SOL"
+            endpoint: "https://price.jup.ag/v1/price?id=$token"
             ecmascript: """
             function transformREST(s) {
                 let out = JSON.parse(s).data;
 
                 if (out.price) {
-                    out = { price: out.price * get("amount") };
+                    if (get("decimals")) {
+                        out = { price: out.price * get("amount") / (10 ** get("decimals")) };
+                    } else {
+                        out = { price: out.price * get("amount") };
+                    }
                 }
 
                 return JSON.stringify(out);

@@ -2,12 +2,30 @@ type Balance {
     mint: String
     tokenAccount: String
     amount: Float
+    amountUSD: Float
+        @materializer(
+            query: "convertToUsd { price }"
+            arguments: [
+                { name: "amount", field: "amount" }
+                { name: "decimals", field: "decimals" }
+                { name: "token", field: "mint" }
+            ]
+        )
     decimals: Float
 }
 
 type Balances {
     tokens: [Balance]
     nativeBalance: Float
+    nativeBalanceDecimals: Float
+    nativeBalanceUSD: Float
+        @materializer(
+            query: "convertToUsd { price }"
+            arguments: [
+                { name: "amount", field: "nativeBalance" }
+                { name: "decimals", field: "nativeBalanceDecimals" }
+            ]
+        )
 }
 
 type Query {
@@ -15,5 +33,14 @@ type Query {
         @rest(
             endpoint: "https://api.helius.xyz/v0/addresses/$address/balances?api-key=$api_key"
             configuration: "helius_config"
+            ecmascript: """
+            function transformREST(s) {
+                let out = JSON.parse(s);
+
+                out.nativeBalanceDecimals = 9;
+
+                return JSON.stringify(out);
+            }
+            """
         )
 }

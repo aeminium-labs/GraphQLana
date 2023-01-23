@@ -3,7 +3,7 @@ type CollectionStats {
     floorPrice: Float
     floorPriceUSD: Float
         @materializer(
-            query: "solToUsd { price }"
+            query: "convertToUsd { price }"
             arguments: [{ name: "amount", field: "floorPrice" }]
         )
     averagePrice: Float
