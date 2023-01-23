@@ -46,6 +46,10 @@ Looking for the documentation? Well with GraphQL everything is self-documented! 
 
 No more wasted time going through the docs to see how to use a given API, using **GraphQLana** will feel natural to you.
 
+### 🔌 Get the best developer experience with the SDK
+
+Integrate our SDK in your application for an improved experience with fully typed responses in your favourite language!
+
 ## Getting started
 
 Head to https://www.graphqlana.com and start exploring Solana's blockchain data with our online GraphQL explorer.
@@ -74,6 +78,14 @@ For that reason, the main query is the `account` query, although it also exposes
 From the account query it's possible to find information about a token balances, associated .sol domains, transactions and existing NFTs.
 
 There are many layers of data to explore for each of these fields and we're regularly improving the existing queries so the best option is to use our online playground and see the data that we can fetch.
+
+## Contributing
+
+Right now contributing to **GraphQLana** isn't as easy as we'd like it to be because we require a bunch of different API keys for it to work.
+
+However, making changes is very simple due to the declarative approach for building our schema so it's possible to suggest changes without having to run things locally.
+
+This is one of the top priorities going forward as we want to make this a community-first project that is as easy as possible to contribute to.
 
 ## Technologies
 

@@ -17,10 +17,15 @@ export type Scalars = {
 
 export type Account = {
   __typename?: 'Account';
+  /** The address of the wallet */
   address?: Maybe<Scalars['String']>;
+  /** Balances of native and SPL tokens in the wallet */
   balances?: Maybe<Balances>;
+  /** Associated .sol domains */
   domains?: Maybe<Domains>;
+  /** Historical NFT events from wallet */
   events?: Maybe<AccountEventsConnection>;
+  /** NFTs stored in the wallet */
   nfts?: Maybe<AccountNftsConnection>;
 };
 
@@ -41,10 +46,12 @@ export type AccountEvents = {
   __typename?: 'AccountEvents';
   amount?: Maybe<Scalars['Float']>;
   buyer?: Maybe<Scalars['String']>;
+  buyerAccount?: Maybe<Account>;
   description?: Maybe<Scalars['String']>;
   nfts?: Maybe<Array<Maybe<NftFingerprint>>>;
   saleType?: Maybe<Scalars['String']>;
   seller?: Maybe<Scalars['String']>;
+  sellerAccount?: Maybe<Account>;
   signature?: Maybe<Scalars['String']>;
   slot?: Maybe<Scalars['Int']>;
   staker?: Maybe<Scalars['String']>;
@@ -92,6 +99,7 @@ export type Asset = {
 export type Balance = {
   __typename?: 'Balance';
   amount?: Maybe<Scalars['Float']>;
+  amountUSD?: Maybe<Scalars['Float']>;
   decimals?: Maybe<Scalars['Float']>;
   mint?: Maybe<Scalars['String']>;
   tokenAccount?: Maybe<Scalars['String']>;
@@ -100,6 +108,8 @@ export type Balance = {
 export type Balances = {
   __typename?: 'Balances';
   nativeBalance?: Maybe<Scalars['Float']>;
+  nativeBalanceDecimals?: Maybe<Scalars['Float']>;
+  nativeBalanceUSD?: Maybe<Scalars['Float']>;
   tokens?: Maybe<Array<Maybe<Balance>>>;
 };
 
@@ -204,6 +214,7 @@ export type PageInfo = {
  */
 export type Query = {
   __typename?: 'Query';
+  /** Account information for a given wallet address */
   account?: Maybe<Account>;
   accountEvents?: Maybe<AccountEventsConnection>;
   accountNfts?: Maybe<AccountNftsConnection>;
@@ -211,10 +222,10 @@ export type Query = {
   collectionStatsByCreator?: Maybe<CollectionStats>;
   collectionStatsByName?: Maybe<CollectionStats>;
   collectionStatsByToken?: Maybe<CollectionStats>;
+  convertToUsd?: Maybe<ConvertToUsd>;
   domains?: Maybe<Domains>;
   nftFingerprint?: Maybe<NftFingerprint>;
   shyftDomains?: Maybe<Domains>;
-  solToUsd?: Maybe<SolToUsd>;
   tokenMarketState?: Maybe<TokenMarketStateResponse>;
 };
 
@@ -324,6 +335,21 @@ export type QueryCollectionStatsByTokenArgs = {
  * If an operation is a `query`, the result of the operation is the result of
  * executing the query’s top level selection set with the `Query` root object type.
  */
+export type QueryConvertToUsdArgs = {
+  amount: Scalars['Float'];
+  decimals?: InputMaybe<Scalars['Float']>;
+  token?: Scalars['String'];
+};
+
+
+/**
+ * Query root object type.
+ *
+ * Contains fields that are available at the top level of a GraphQL `query`.
+ *
+ * If an operation is a `query`, the result of the operation is the result of
+ * executing the query’s top level selection set with the `Query` root object type.
+ */
 export type QueryDomainsArgs = {
   address: Scalars['String'];
 };
@@ -363,19 +389,6 @@ export type QueryShyftDomainsArgs = {
  * If an operation is a `query`, the result of the operation is the result of
  * executing the query’s top level selection set with the `Query` root object type.
  */
-export type QuerySolToUsdArgs = {
-  price: Scalars['Float'];
-};
-
-
-/**
- * Query root object type.
- *
- * Contains fields that are available at the top level of a GraphQL `query`.
- *
- * If an operation is a `query`, the result of the operation is the result of
- * executing the query’s top level selection set with the `Query` root object type.
- */
 export type QueryTokenMarketStateArgs = {
   address: Scalars['String'];
 };
@@ -397,8 +410,8 @@ export type Trait = {
   value?: Maybe<Scalars['String']>;
 };
 
-export type SolToUsd = {
-  __typename?: 'solToUsd';
+export type ConvertToUsd = {
+  __typename?: 'convertToUsd';
   price?: Maybe<Scalars['Float']>;
 };
 

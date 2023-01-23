@@ -1,11 +1,11 @@
 {
-    "name": "nextjs-solana-starter-kit",
-    "description": "Build your own Solana dApp with NextJS and TypeScript",
+    "name": "GraphQLana",
+    "description": "Solana's blockchain data for humans",
     "version": "0.1.0",
     "author": {
-        "name": "Bernardo Raposo",
-        "email": "hi@bernardoraposo.com",
-        "url": "http://bernardoraposo.com"
+        "name": "aeminium labs",
+        "email": "build@aeminium.xyz",
+        "url": "http://aeminium.xyz"
     },
     "license": "MIT",
     "scripts": {
