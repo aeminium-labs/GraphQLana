@@ -1,0 +1,141 @@
+type Events {
+    description: String
+    amount: Float
+    slot: Int
+    timestamp: Int
+    saleType: String
+    signature: String
+    buyer: String
+    buyerAccount: Account
+        @materializer(
+            query: "account"
+            arguments: [{ name: "address", field: "buyer" }]
+        )
+    seller: String
+    sellerAccount: Account
+        @materializer(
+            query: "account"
+            arguments: [{ name: "address", field: "seller" }]
+        )
+    staker: String
+    nfts: [NftFingerprint]
+    type: EventTypes
+}
+
+type EventsEdge {
+    node: Events
+    cursor: String
+}
+
+type EventsConnection {
+    pageInfo: PageInfo!
+    edges: [EventsEdge]
+}
+
+input EventsFilters {
+    types: [EventTypes] = []
+    startSlot: Int
+    endSlot: Int
+    startTime: Int
+    endTime: Int
+}
+
+type Query {
+    accountEvents(
+        address: String!
+        first: Int! = 100
+        after: String! = ""
+        sortOrder: SortType = DESC
+        filters: EventsFilters = { types: [] }
+    ): EventsConnection
+        @rest(
+            method: POST
+            endpoint: "https://api.helius.xyz/v1/nft-events?api-key=$api_key"
+            contenttype: "application/json"
+            configuration: "helius_config"
+            cachepolicy: { strategy: ON }
+            postbody: """
+            {
+                "query": {
+                    "accounts": ["{{ .Get "address" }}"],
+                    "types": {{ .GetJSON "filters.types" }},
+                    "startSlot": {{ .GetJSON "filters.startSlot" }},
+                    "endSlot": {{ .GetJSON "filters.endSlot" }},
+                    "startTime": {{ .GetJSON "filters.startTime" }},
+                    "endTime": {{ .GetJSON "filters.endTime" }}
+                },
+                "options": {
+                    "limit": {{ .Get "first" }},
+                    "sortOrder": "{{ .Get "sortOrder" }}",
+                    "paginationToken": "{{ .Get "after" }}"
+                }
+            }
+            """
+            ecmascript: """
+            function bodyPOST(s) {
+                let body = JSON.parse(s);
+
+                if (body.options.paginationToken.length === 0) {
+                    body.options.paginationToken = null;
+                }
+
+                return JSON.stringify(body);
+            }
+            """
+            resultroot: "result[]"
+            pagination: {
+                type: NEXT_CURSOR
+                setters: [{ field: "nextCursor", path: "paginationToken" }]
+            }
+        )
+
+    collectionEvents(
+        creatorAddress: String!
+        first: Int! = 100
+        after: String! = ""
+        sortOrder: SortType = DESC
+        filters: EventsFilters = { types: [] }
+    ): EventsConnection
+        @rest(
+            method: POST
+            endpoint: "https://api.helius.xyz/v1/nft-events?api-key=$api_key"
+            contenttype: "application/json"
+            configuration: "helius_config"
+            cachepolicy: { strategy: ON }
+            postbody: """
+            {
+                "query": {
+                    "types": {{ .GetJSON "filters.types" }},
+                    "startSlot": {{ .GetJSON "filters.startSlot" }},
+                    "endSlot": {{ .GetJSON "filters.endSlot" }},
+                    "startTime": {{ .GetJSON "filters.startTime" }},
+                    "endTime": {{ .GetJSON "filters.endTime" }},
+                    "nftCollectionFilters": {
+                        "firstVerifiedCreator": ["{{ .Get "creatorAddress" }}"]
+                    }
+                },
+                "options": {
+                    "limit": {{ .Get "first" }},
+                    "sortOrder": "{{ .Get "sortOrder" }}",
+                    "paginationToken": "{{ .Get "after" }}"
+                }
+            }
+            """
+            ecmascript: """
+            function bodyPOST(s) {
+                let body = JSON.parse(s);
+
+                if (body.options.paginationToken.length === 0) {
+                    body.options.paginationToken = null;
+                }
+
+                return JSON.stringify(body);
+            }
+            """
+            resultroot: "result[]"
+            pagination: {
+                type: NEXT_CURSOR
+                setters: [{ field: "nextCursor", path: "paginationToken" }]
+            }
+        )
+}

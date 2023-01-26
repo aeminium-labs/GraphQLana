@@ -1,4 +1,4 @@
-type Asset {
+type AccountNft {
     name: String
     tokenAddress: String!
     collectionName: String
@@ -33,7 +33,7 @@ type Trait {
 }
 
 type AccountNftsEdge {
-    node: Asset
+    node: AccountNft
     cursor: String
 }
 

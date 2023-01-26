@@ -26,19 +26,19 @@ type Account {
     Historical NFT events from wallet
     """
     events(
-        types: [EventTypes]
         first: Int
         after: String
         sortOrder: SortType
-    ): AccountEventsConnection
+        filters: EventsFilters
+    ): EventsConnection
         @materializer(
             query: "accountEvents"
             arguments: [
                 { name: "address", field: "address" }
-                { name: "types", argument: "types" }
                 { name: "after", argument: "after" }
                 { name: "first", argument: "first" }
                 { name: "sortOrder", argument: "sortOrder" }
+                { name: "filters", argument: "filters" }
             ]
         )
 

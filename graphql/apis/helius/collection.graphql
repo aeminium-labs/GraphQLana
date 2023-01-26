@@ -1,0 +1,46 @@
+type Collection {
+    """
+    The address of the first verified creator
+    """
+    creatorAddress: String
+
+    """
+    Historical NFT events from collection
+    """
+    events(
+        first: Int
+        after: String
+        sortOrder: SortType
+        filters: EventsFilters
+    ): EventsConnection
+        @materializer(
+            query: "collectionEvents"
+            arguments: [
+                { name: "creatorAddress", field: "creatorAddress" }
+                { name: "first", argument: "first" }
+                { name: "after", argument: "after" }
+                { name: "sortOrder", argument: "sortOrder" }
+                { name: "filters", argument: "filters" }
+            ]
+        )
+
+    """
+    NFTs in the collection
+    """
+    nfts(first: Int, after: String): CollectionNftsConnection
+        @materializer(
+            query: "collectionNfts"
+            arguments: [
+                { name: "creatorAddress", field: "creatorAddress" }
+                { name: "first", argument: "first" }
+                { name: "after", argument: "after" }
+            ]
+        )
+}
+
+type Query {
+    """
+    Collection information for a given the first verified creator address
+    """
+    collection(creatorAddress: String!): Collection @connector(type: "echo")
+}

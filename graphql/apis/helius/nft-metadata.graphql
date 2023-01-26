@@ -1,0 +1,27 @@
+type NftMetadata {
+    tokenAddress: String!
+    description: String
+    imageURL: String
+    traits: [Trait]
+}
+
+type Query {
+    nftMetadata(tokenAddress: String!): NftMetadata
+        @rest(
+            method: POST
+            endpoint: "https://api.helius.xyz/v0/tokens/metadata?api-key=$api_key"
+            configuration: "helius_config"
+            cachepolicy: { strategy: ON }
+            postbody: """
+            {
+                "mintAccounts": ["{{ .Get "tokenAddress" }}"]
+            }
+            """
+            setters: [
+                { field: "description", path: "offChainData.description" }
+                { field: "tokenAddress", path: "mint" }
+                { field: "imageURL", path: "offChainData.image" }
+                { field: "traits", path: "offChainData.attributes" }
+            ]
+        )
+}

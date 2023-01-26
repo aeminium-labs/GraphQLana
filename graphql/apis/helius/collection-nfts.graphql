@@ -1,0 +1,85 @@
+type CollectionNft {
+    name: String
+    tokenAddress: String!
+    imageURL: String
+        @materializer(
+            query: "nftMetadata { imageURL }"
+            arguments: [{ name: "tokenAddress", field: "tokenAddress" }]
+        )
+    traits: [Trait]
+    # collectionName: String
+    # collectionAddress: String
+
+    activeListings: [Listing]
+        @materializer(
+            query: "nftFingerprint { activeListings }"
+            arguments: [{ name: "tokenAddress", field: "tokenAddress" }]
+        )
+    # collectionStats: CollectionStats
+    #     @materializer(
+    #         query: "collectionStatsByToken"
+    #         arguments: [{ name: "tokenAddress", field: "tokenAddress" }]
+    #     )
+    # moonrankRarity: Int
+    #     @materializer(
+    #         query: "tokenMarketState { moonrankRarity }"
+    #         arguments: [{ name: "address", field: "tokenAddress" }]
+    #     )
+    # howrareRarity: Int
+    #     @materializer(
+    #         query: "tokenMarketState { howrareRarity }"
+    #         arguments: [{ name: "address", field: "tokenAddress" }]
+    #     )
+}
+
+type CollectionNftsEdge {
+    node: CollectionNft
+    cursor: String
+}
+
+type CollectionNftsConnection {
+    pageInfo: PageInfo!
+    edges: [CollectionNftsEdge]
+}
+
+type Query {
+    collectionNfts(
+        creatorAddress: String!
+        first: Int! = 100
+        after: String! = ""
+    ): CollectionNftsConnection
+        @rest(
+            method: POST
+            endpoint: "https://api.helius.xyz/v1/mintlist?api-key=$api_key"
+            contenttype: "application/json"
+            configuration: "helius_config"
+            postbody: """
+            {
+                "query": {
+                    "firstVerifiedCreators": ["{{ .Get "creatorAddress" }}"]
+                },
+                "options": {
+                    "limit": {{ .Get "first" }},
+                    "paginationToken": "{{ .Get "after" }}"
+                }
+            }
+            """
+            ecmascript: """
+            function bodyPOST(s) {
+                let body = JSON.parse(s);
+
+                if (body.options.paginationToken.length === 0) {
+                    body.options.paginationToken = null;
+                }
+
+                return JSON.stringify(body);
+            }
+            """
+            resultroot: "result[]"
+            setters: [{ field: "tokenAddress", path: "mint" }]
+            pagination: {
+                type: NEXT_CURSOR
+                setters: [{ field: "nextCursor", path: "paginationToken" }]
+            }
+        )
+}
