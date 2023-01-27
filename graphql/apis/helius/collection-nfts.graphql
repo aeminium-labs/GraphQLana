@@ -7,6 +7,10 @@ type CollectionNft {
             arguments: [{ name: "tokenAddress", field: "tokenAddress" }]
         )
     traits: [Trait]
+        @materializer(
+            query: "nftMetadata { traits }"
+            arguments: [{ name: "tokenAddress", field: "tokenAddress" }]
+        )
     # collectionName: String
     # collectionAddress: String
 

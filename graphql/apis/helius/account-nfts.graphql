@@ -28,7 +28,7 @@ type AccountNft {
 }
 
 type Trait {
-    trait_type: String
+    traitType: String
     value: String
 }
 
@@ -56,5 +56,8 @@ type Query {
                 type: PAGE_NUMBER
                 setters: [{ field: "total", path: "numberOfPages" }]
             }
+            transforms: [
+                { pathpattern: [], editor: "rename:trait_type,traitType" }
+            ]
         )
 }

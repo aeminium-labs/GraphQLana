@@ -3,6 +3,11 @@ type Events {
     amount: Float
     slot: Int
     timestamp: Int
+    dateUTC: String
+        @materializer(
+            query: "timestampToUtc { dateUTC }"
+            arguments: [{ name: "timestamp", field: "timestamp" }]
+        )
     saleType: String
     signature: String
     buyer: String
@@ -20,6 +25,7 @@ type Events {
     staker: String
     nfts: [NftFingerprint]
     type: EventTypes
+    source: String
 }
 
 type EventsEdge {
@@ -137,5 +143,8 @@ type Query {
                 type: NEXT_CURSOR
                 setters: [{ field: "nextCursor", path: "paginationToken" }]
             }
+            transforms: [
+                { pathpattern: [], editor: "rename:mint,tokenAddress" }
+            ]
         )
 }

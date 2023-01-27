@@ -122,3 +122,76 @@ One of the core objective of this project is to make data more accessible and we
 Even though StepZen already provides a bunch of optimizations out of the box, we use Stellate for our public-facing GraphQL endpoint so we get advanced caching optimizations and usage metrics.
 
 This is an amazing service that makes queries to GraphQLana as fast as possible and improves the developer experience of those using our endpoint.
+
+## Advanced Examples
+
+**Get wallet information (balance, domains), nfts in the wallet and latest 10 sale or listing events**
+
+```gql
+{
+    account(address: "6S51S6oah3e7khhQBFhPrUHurasWY9AGcEsEaZKyp184") {
+        balances {
+            nativeBalance
+            nativeBalanceUSD
+        }
+        domains {
+            names
+        }
+        nfts {
+            edges {
+                node {
+                    name
+                    collectionName
+                    collectionStats {
+                        averagePrice
+                        floorPrice
+                    }
+                }
+            }
+        }
+        events(first: 10, filters: { types: [NFT_SALE, NFT_LISTING] }) {
+            edges {
+                node {
+                    dateUTC
+                    description
+                    source
+                    type
+                    amount
+                    nfts {
+                        name
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+**Get 10 items and the latest 10 sales from collection**
+
+```gql
+{
+    collection(creatorAddress: "DnP3GRVqtR9vjxMZH4PcFuGZ4ZqhbNqoGzJuTrHACK6f") {
+        nfts(first: 10) {
+            edges {
+                node {
+                    name
+                    tokenAddress
+                    imageURL
+                }
+            }
+        }
+        events(first: 10, filters: { types: [NFT_SALE] }) {
+            edges {
+                node {
+                    dateUTC
+                    description
+                    nfts {
+                        tokenAddress
+                    }
+                }
+            }
+        }
+    }
+}
+```

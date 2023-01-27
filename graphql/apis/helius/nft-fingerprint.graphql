@@ -6,7 +6,7 @@ type Listing {
 }
 
 type NftFingerprint {
-    mint: String
+    tokenAddress: String
     name: String
     burned: Boolean
     firstVerifiedCreator: String
@@ -25,5 +25,6 @@ type Query {
                 "mints": ["{{ .Get "tokenAddress" }}"]
             }
             """
+            setters: [{ field: "tokenAddress", path: "mint" }]
         )
 }

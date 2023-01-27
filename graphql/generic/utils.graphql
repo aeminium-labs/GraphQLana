@@ -2,6 +2,10 @@ type convertToUsd {
     price: Float
 }
 
+type timestampToUtc {
+    dateUTC: String
+}
+
 type Query {
     convertToUsd(
         amount: Float!
@@ -23,6 +27,18 @@ type Query {
                 }
 
                 return JSON.stringify(out);
+            }
+            """
+        )
+
+    timestampToUtc(timestamp: Int!): timestampToUtc
+        @rest(
+            endpoint: "stepzen:empty"
+            ecmascript: """
+            function transformREST(s) {
+                const date = new Date(get("timestamp") * 1000).toUTCString();
+
+                return { dateUTC: date };
             }
             """
         )
