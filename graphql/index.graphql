@@ -1,14 +1,14 @@
 schema
     @sdl(
         files: [
+            "aggregators/collection.graphql"
+            "aggregators/account.graphql"
             "apis/helius/balances.graphql"
             "apis/helius/domains.graphql"
-            "apis/helius/account.graphql"
             "apis/helius/account-nfts.graphql"
             "apis/helius/nft-events.graphql"
             "apis/helius/nft-fingerprint.graphql"
             "apis/helius/nft-metadata.graphql"
-            "apis/helius/collection.graphql"
             "apis/helius/collection-nfts.graphql"
             "apis/shyft/domains.graphql"
             "apis/hyperspace/token-state.graphql"
