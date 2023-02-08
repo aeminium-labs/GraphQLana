@@ -15,3 +15,13 @@ configurationset:
           name: flipside_config
           api_key: STEPZEN_FLIPSIDE_API_KEY
           stepzen.queryextensionguard: true
+access:
+    policies:
+        - type: Query
+          rules:
+              - condition: true
+                name: public fields
+                fields: [collection, account]
+              - condition: true
+                name: introspection
+                fields: [__type, __schema, __typename, _service]
