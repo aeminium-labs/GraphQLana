@@ -36,6 +36,12 @@ type Collection {
                 { name: "after", argument: "after" }
             ]
         )
+
+    stats: CollectionStats
+        @materializer(
+            query: "collectionStatsByCreator"
+            arguments: [{ name: "creatorAddress", field: "creatorAddress" }]
+        )
 }
 
 type Query {
