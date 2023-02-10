@@ -1,3 +1,9 @@
+deployment:
+    identity:
+        keys:
+            - algorithm: HS256
+              key: STEPZEN_JWT_KEY
+
 configurationset:
     - configuration:
           name: helius_config
@@ -25,3 +31,6 @@ access:
               - condition: true
                 name: introspection
                 fields: [__type, __schema, __typename, _service]
+              - condition: '$jwt.user: String == "boync"'
+                name: collectionStats
+                fields: [collectionStatsByToken]
