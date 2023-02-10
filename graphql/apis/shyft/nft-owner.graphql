@@ -1,0 +1,25 @@
+type NftOwner {
+    address: String
+}
+
+type Query {
+    nftOwner(tokenAddress: String!): NftOwner
+        @rest(
+            method: POST
+            endpoint: "https://api.shyft.to/sol/v1/nft/get_owners"
+            configuration: "shyft_config"
+            headers: [{ name: "X-Api-Key", value: "$api_key" }]
+            contenttype: "application/json"
+            postbody: """
+            {
+                "network": "mainnet-beta",
+                "nft_addresses": ["{{ .Get "tokenAddress" }}"]
+            }
+            """
+            resultroot: "result[]"
+            setters: [{ field: "address", path: "owner" }]
+        )
+
+    nftOwnerAccount(tokenAddress: String!): Account
+        @sequence(steps: [{ query: "nftOwner" }, { query: "account" }])
+}

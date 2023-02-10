@@ -11,29 +11,17 @@ type CollectionNft {
             query: "nftMetadata { traits }"
             arguments: [{ name: "tokenAddress", field: "tokenAddress" }]
         )
-    # collectionName: String
-    # collectionAddress: String
 
     activeListings: [Listing]
         @materializer(
             query: "nftFingerprint { activeListings }"
             arguments: [{ name: "tokenAddress", field: "tokenAddress" }]
         )
-    # collectionStats: CollectionStats
-    #     @materializer(
-    #         query: "collectionStatsByToken"
-    #         arguments: [{ name: "tokenAddress", field: "tokenAddress" }]
-    #     )
-    # moonrankRarity: Int
-    #     @materializer(
-    #         query: "tokenMarketState { moonrankRarity }"
-    #         arguments: [{ name: "address", field: "tokenAddress" }]
-    #     )
-    # howrareRarity: Int
-    #     @materializer(
-    #         query: "tokenMarketState { howrareRarity }"
-    #         arguments: [{ name: "address", field: "tokenAddress" }]
-    #     )
+    owner: Account
+        @materializer(
+            query: "nftOwnerAccount"
+            arguments: [{ name: "tokenAddress", field: "tokenAddress" }]
+        )
 }
 
 type CollectionNftsEdge {

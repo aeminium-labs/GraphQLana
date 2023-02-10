@@ -17,6 +17,7 @@ type NftFingerprint {
 type Query {
     nftFingerprint(tokenAddress: String!): NftFingerprint
         @rest(
+            method: POST
             endpoint: "https://api.helius.xyz/v1/nfts?api-key=$api_key"
             configuration: "helius_config"
             contenttype: "application/json"

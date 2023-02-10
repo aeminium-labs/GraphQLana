@@ -11,6 +11,7 @@ schema
             "apis/helius/nft-metadata.graphql"
             "apis/helius/collection-nfts.graphql"
             "apis/shyft/domains.graphql"
+            "apis/shyft/nft-owner.graphql"
             "apis/hyperspace/token-state.graphql"
             "apis/hyperspace/collection-stats.graphql"
             "apis/flipside/utils.graphql"
