@@ -1,0 +1,45 @@
+type NativeTransfer {
+    fromUserAccount: String
+    toUserAccount: String
+    amount: Float
+    amountUSD: Float
+        @materializer(
+            query: "convertToUsd { price }"
+            arguments: [
+                { name: "amount", field: "amount" }
+                { name: "decimals", const: 9 }
+            ]
+        )
+}
+
+type TokenTransfer {
+    fromUserAccount: String
+    toUserAccount: String
+    tokenAmount: Float
+    mint: String
+}
+
+type AccountTransaction {
+    type: String
+    signature: String
+    timestamp: Int
+    description: String
+    dateUTC: String
+        @materializer(
+            query: "timestampToUtc { dateUTC }"
+            arguments: [{ name: "timestamp", field: "timestamp" }]
+        )
+    nativeTransfers: [NativeTransfer]
+    tokenTransfers: [TokenTransfer]
+}
+
+type Query {
+    accountTransactions(
+        address: String!
+        type: String! = ""
+    ): [AccountTransaction]
+        @rest(
+            endpoint: "https://api.helius.xyz/v0/addresses/$address/transactions?api-key=$api_key&type=$type"
+            configuration: "helius_config"
+        )
+}

@@ -3,9 +3,11 @@ schema
         files: [
             "aggregators/collection.graphql"
             "aggregators/account.graphql"
+            "aggregators/stats.graphql"
             "apis/helius/balances.graphql"
             "apis/helius/domains.graphql"
             "apis/helius/account-nfts.graphql"
+            "apis/helius/account-transactions.graphql"
             "apis/helius/nft-events.graphql"
             "apis/helius/nft-fingerprint.graphql"
             "apis/helius/nft-metadata.graphql"
@@ -16,6 +18,8 @@ schema
             "apis/hyperspace/collection-stats.graphql"
             "apis/flipside/utils.graphql"
             "apis/flipside/token-price.graphql"
+            "apis/solanafm/domains.graphql"
+            "apis/solanafm/stats.graphql"
             "generic/globals.graphql"
             "generic/utils.graphql"
         ]

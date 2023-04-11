@@ -18,7 +18,7 @@ type Account {
     """
     domains: Domains
         @materializer(
-            query: "shyftDomains"
+            query: "solanafmDomains"
             arguments: [{ name: "address", field: "address" }]
         )
 
@@ -51,6 +51,18 @@ type Account {
             arguments: [
                 { name: "address", field: "address" }
                 { name: "after", argument: "after" }
+            ]
+        )
+
+    """
+    Historical transactions from wallet
+    """
+    transactions(type: String): [AccountTransaction]
+        @materializer(
+            query: "accountTransactions"
+            arguments: [
+                { name: "address", field: "address" }
+                { name: "type", argument: "type" }
             ]
         )
 }

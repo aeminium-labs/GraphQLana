@@ -1,0 +1,28 @@
+type Stats {
+    """
+    The date of the stats
+    """
+    date: String
+
+    """
+    Returns the total transaction fees in SOL for the specified date
+    """
+    transactionFees: StatsResponse @materializer(query: "transactionFees")
+
+    """
+    Returns the total block rewards in SOL for the specified date
+    """
+    rewards: StatsResponse @materializer(query: "rewards")
+
+    """
+    Returns the total active users for the specified date
+    """
+    activeUsers: ActiveUsers @materializer(query: "activeUsers")
+}
+
+type Query {
+    """
+    Daily usage stats from Solana blockchain
+    """
+    stats(date: String): Stats @connector(type: "echo")
+}

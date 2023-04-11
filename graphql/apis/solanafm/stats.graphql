@@ -1,0 +1,52 @@
+type StatsResponse {
+    date: String
+    amount: Float
+    amountUsd: Float
+        @materializer(
+            query: "convertToUsd { price }"
+            arguments: [
+                { name: "amount", field: "amount" }
+                { name: "decimals", const: 9 }
+            ]
+        )
+}
+
+type ActiveUsers {
+    date: String
+    users: Float
+}
+
+type Query {
+    transactionFees(date: String): StatsResponse
+        @rest(
+            endpoint: "https://api.solana.fm/v0/stats/tx-fees"
+            configuration: "solanafm_config"
+            resultroot: "result"
+            setters: [{ field: "amount", path: "totalTxFees" }]
+            ecmascript: """
+            function transformREST(s) {
+                let original = JSON.parse(s);
+
+                original.result.totalTxFees = original.result.totalTxFees / (10 ** 9);
+
+                return JSON.stringify(original);
+            }
+            """
+        )
+
+    rewards(date: String): StatsResponse
+        @rest(
+            endpoint: "https://api.solana.fm/v0/stats/rewards"
+            configuration: "solanafm_config"
+            resultroot: "result"
+            setters: [{ field: "amount", path: "rewards" }]
+        )
+
+    activeUsers(date: String): ActiveUsers
+        @rest(
+            endpoint: "https://api.solana.fm/v0/stats/active-users"
+            configuration: "solanafm_config"
+            resultroot: "result"
+            setters: [{ field: "users", path: "activeUsers" }]
+        )
+}

@@ -1,0 +1,23 @@
+type Query {
+    solanafmDomains(address: String!): Domains
+        @rest(
+            endpoint: "https://api.solana.fm/v0/domains/bonfida/$address"
+            configuration: "solanafm_config"
+            ecmascript: """
+            function transformREST(s) {
+                let original = JSON.parse(s);
+
+                let out = original;
+
+
+                if (original.result[0].domains) {
+                    out = {
+                        names: original.result[0].domains.map(domain => domain.name)
+                    }
+                }
+
+                return JSON.stringify(out);
+            }
+            """
+        )
+}
