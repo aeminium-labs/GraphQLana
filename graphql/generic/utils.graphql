@@ -13,10 +13,10 @@ type Query {
         token: String! = "So11111111111111111111111111111111111111112"
     ): convertToUsd
         @rest(
-            endpoint: "https://price.jup.ag/v1/price?id=$token"
+            endpoint: "https://price.jup.ag/v4/price?ids=$token"
             ecmascript: """
             function transformREST(s) {
-                let out = JSON.parse(s).data;
+                let out = JSON.parse(s).data[get("token")];
 
                 if (out.price) {
                     if (get("decimals")) {
